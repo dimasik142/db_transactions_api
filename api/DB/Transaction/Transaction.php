@@ -15,12 +15,13 @@ class Transaction extends Sql
     function __destruct() {
         if ($this->transactionStatus){
             if ($this->transactionErrors){
+                echo 'Під час транзакції виникла помилка - rollback. <br>';
                 $this->transactionRollback();
             } else {
+                echo 'Транзакція пройшла успішно - commit. <br>';
                 $this->transactionCommit();
             }
         }
-        echo 'Трансакція автоматично закрита';
     }
 
     /**
@@ -56,8 +57,10 @@ class Transaction extends Sql
     public function finishTransaction(){
         if ($this->transactionStatus){
             if ($this->transactionErrors){
+                echo 'Під час транзакції виникла помилка - rollback. <br>';
                 $this->transactionRollback();
             } else {
+                echo 'Транзакція пройшла успішно - commit. <br>';
                 $this->transactionCommit();
             }
         }
@@ -73,7 +76,7 @@ class Transaction extends Sql
         if (in_array($isolationLevelNumber,[0,1,2,3])) {
             return $this->isolationLevels[$isolationLevelNumber];
         } else {
-            echo 'Рівня ізоляції з таким номером не існує';
+            echo 'Рівня ізоляції з таким номером не існує. <br>';
         }
     }
 
@@ -110,8 +113,8 @@ class Transaction extends Sql
      */
     public function runQuery($sqlQueryString) {
         $result  = $this->querySql($sqlQueryString);
-        if (mysqli_connect_error()){
-            echo mysqli_connect_error();
+        if (!$result){
+            echo 'Під час sql запиту відбулась помилка. ---  '. $sqlQueryString .'<br>';
             $this->transactionErrors = true;
         };
     }

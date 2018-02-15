@@ -15,6 +15,9 @@ include('api/DB/Transaction/Transaction.php');
 $transaction = new \Sql\Transaction\Transaction();
 
 $transaction->startTransaction(3);
-$transaction->runQuery("INSERT INTO `User` VALUES ('111111')");
-$transaction->runQuery("INSERT INTO `User` VALUES ('222222')");
-$transaction->transactionCommit();
+$transaction->runQuery("INSERT INTO `OrderTab` VALUES ('A','222')");
+$transaction->runQuery("INSERT INTO `OrderTab` VALUES ('B','333')");
+$transaction->runQuery("INSERT INTO `User` VALUES ('22')");
+$transaction->runQuery("INSERT INTO `User` VALUES ('23')");
+$transaction->runQuery("INSERT INTO `User` VALUES ('34')");
+$transaction->finishTransaction();
